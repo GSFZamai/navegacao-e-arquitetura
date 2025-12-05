@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fokus/app/utils/app_config.dart';
-import '../enums/timer_type.dart';
+import 'package:fokus/app/shared/utils/app_config.dart';
+import '../../shared/enums/timer_type.dart';
 import '../widgets/timer_widget.dart';
 
 class TimerPage extends StatelessWidget {
