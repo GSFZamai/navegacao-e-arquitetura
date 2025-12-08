@@ -14,7 +14,7 @@ class TimerViewModel extends ChangeNotifier {
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (isPaused.value) return;
-      if (currentTime.inSeconds < initialMinutes) {
+      if (currentTime.inMinutes < initialMinutes) {
         currentTime += Duration(seconds: 1);
         notifyListeners();
       } else {
