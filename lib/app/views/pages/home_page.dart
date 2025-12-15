@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fokus/app/shared/enums/timer_type.dart';
 import '../../shared/utils/app_config.dart';
 
