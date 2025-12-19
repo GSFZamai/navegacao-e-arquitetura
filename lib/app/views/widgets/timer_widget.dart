@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:fokus/app/shared/utils/app_config.dart';
 import 'package:fokus/app/view_models/timer_view_model.dart';
+import 'package:provider/provider.dart';
 
 class TimerWidget extends StatefulWidget {
   final int initialMinutes;
-  final TimerViewModel timerViewModel;
 
-  const TimerWidget({
-    super.key,
-    required this.initialMinutes,
-    required this.timerViewModel,
-  });
+  const TimerWidget({super.key, required this.initialMinutes});
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
+  late TimerViewModel timerViewModel;
   ValueNotifier<bool> isPaused = ValueNotifier(false);
 
   @override
   void initState() {
+    timerViewModel = Provider.of<TimerViewModel>(context, listen: false);
     super.initState();
   }
 
   void onPressButton() {
-    if (widget.timerViewModel.isRunning) {
-      widget.timerViewModel.stopTimer();
+    if (timerViewModel.isRunning) {
+      timerViewModel.stopTimer();
     } else {
-      widget.timerViewModel.startTimer(widget.initialMinutes, isPaused);
+      timerViewModel.startTimer(widget.initialMinutes, isPaused);
     }
     isPaused.value = false;
   }
@@ -39,7 +37,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void dispose() {
-    widget.timerViewModel.stopTimer();
+    timerViewModel.stopTimer();
     super.dispose();
   }
 
@@ -59,9 +57,9 @@ class _TimerWidgetState extends State<TimerWidget> {
         children: [
           // Timer
           AnimatedBuilder(
-            animation: widget.timerViewModel,
+            animation: timerViewModel,
             builder: (context, child) {
-              final currentTime = widget.timerViewModel.currentTime;
+              final currentTime = timerViewModel.currentTime;
               return Text(
                 "${currentTime.inMinutes.toString().padLeft(2, "0")}:${(currentTime.inSeconds % 60).toString().padLeft(2, "0")}",
                 style: TextStyle(
@@ -80,9 +78,9 @@ class _TimerWidgetState extends State<TimerWidget> {
             width: double.infinity,
             height: 56,
             child: ListenableBuilder(
-              listenable: widget.timerViewModel,
+              listenable: timerViewModel,
               builder: (context, child) {
-                final isRunning = widget.timerViewModel.isRunning;
+                final isRunning = timerViewModel.isRunning;
                 return ElevatedButton(
                   onPressed: () {
                     onPressButton();
@@ -124,9 +122,9 @@ class _TimerWidgetState extends State<TimerWidget> {
           ),
           SizedBox(height: 20),
           ListenableBuilder(
-            listenable: widget.timerViewModel,
+            listenable: timerViewModel,
             builder: (context, child) {
-              final isRunning = widget.timerViewModel.isRunning;
+              final isRunning = timerViewModel.isRunning;
               if (!isRunning) return SizedBox.shrink();
               return ValueListenableBuilder(
                 valueListenable: isPaused,

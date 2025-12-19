@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fokus/app/view_models/timer_view_model.dart';
 import 'package:fokus/app/views/widgets/timer_widget.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 class MockTimerViewModel extends Mock implements TimerViewModel {}
 
@@ -11,10 +12,9 @@ void main() {
   late TimerViewModel timerViewModel = TimerViewModel();
 
   Widget createWidget({required TimerViewModel timerViewModel}) {
-    return MaterialApp(
-      home: Scaffold(
-        body: TimerWidget(initialMinutes: 1, timerViewModel: timerViewModel),
-      ),
+    return ChangeNotifierProvider.value(
+      value: timerViewModel,
+      child: MaterialApp(home: Scaffold(body: TimerWidget(initialMinutes: 1))),
     );
   }
 

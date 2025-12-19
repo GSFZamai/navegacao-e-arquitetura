@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fokus/app/shared/utils/app_config.dart';
-import 'package:fokus/app/view_models/timer_view_model.dart';
 import '../../shared/enums/timer_type.dart';
 import '../widgets/timer_widget.dart';
 
@@ -35,10 +34,7 @@ class TimerPage extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               // Widget de timer
-              TimerWidget(
-                initialMinutes: timerType.minutes,
-                timerViewModel: TimerViewModel(),
-              ),
+              TimerWidget(initialMinutes: timerType.minutes),
               const SizedBox(height: 32),
               Text(
                 AppConfig.footerText,
